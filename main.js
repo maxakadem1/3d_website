@@ -178,7 +178,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-//star rendering
+//star rendering loop
 //Array(200).fill().forEach(addStar);
 //main animation
 animate();
