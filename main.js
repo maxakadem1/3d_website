@@ -109,13 +109,13 @@ const gridHelper = new THREE.GridHelper(200, 50);
 //controls
 const controls = new OrbitControls(camera, renderer.domElement);
 //====================POSITIONS=============================
-pointLight.position.set(0, 0, 0);
+pointLight.position.set(0, 0, 25);
 torus.position.set(0, 0, 0);
 ambientLight.position.set(0, 0, 0);
 
 //====================ADDITIONS=============================
 //OBJECTS:
-//scene.add(pointLight);
+scene.add(pointLight);
 scene.add(ambientLight);
 //TORUS:
 // scene.add(torus);
@@ -130,7 +130,7 @@ scene.add(cubeOutline2);
 scene.add(cube_void);
 
 //HELPERS:
-scene.add(lightHelper);
+//scene.add(lightHelper);
 // scene.add(gridHelper);
 
 //====================FUNCTIONS=============================
@@ -167,10 +167,10 @@ function animate() {
   cube_big.rotation.y += 0.01;
   cubeOutline.rotation.x += 0.01;
   cubeOutline.rotation.y += 0.01;
-  cube_small.rotation.x += 0.02;
-  cube_small.rotation.y += 0.02;
-  cubeOutline2.rotation.x += 0.02;
-  cubeOutline2.rotation.y += 0.02;
+  cube_small.rotation.x += 0.01;
+  cube_small.rotation.y += 0.01;
+  cubeOutline2.rotation.x += 0.01;
+  cubeOutline2.rotation.y += 0.01;
   cube_void.rotation.x += 0.01;
   cube_void.rotation.y += 0.01;
 
