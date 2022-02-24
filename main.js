@@ -23,8 +23,6 @@ camera.position.setZ(30);
 
 renderer.render(scene, camera);
 //SHAPES:
-const torus_big = new THREE.TorusGeometry(10, 3, 20, 70);
-const torus_small = new THREE.TorusGeometry(5, 1, 20, 70);
 const square_big = new THREE.BoxGeometry(15, 15, 15);
 const sqare_small = new THREE.BoxGeometry(4, 4, 4);
 const square_void = new THREE.BoxGeometry(10, 10, 10);
@@ -48,11 +46,11 @@ const materialVertex = new THREE.MeshBasicMaterial({
 });
 //MATERIAL: works with light
 const materialLight = new THREE.MeshStandardMaterial({
-  color: blue,
+  color: red3,
 });
 //MATERIAL: borderlands style
 const materialBorder = new THREE.MeshStandardMaterial({
-  color: blue_soft,
+  color: white,
   side: THREE.BackSide,
   //depthTest: false,
 });
@@ -65,38 +63,53 @@ const materialBorderNoDepth = new THREE.MeshStandardMaterial({
   //opacity: 1,
 });
 const materialBorderNoDepthPink = new THREE.MeshStandardMaterial({
-  color: blue_soft,
+  color: white,
   side: THREE.BackSide,
   //depthWrite: false,
   depthTest: false,
 });
 const materialBorderNoDepthRed = new THREE.MeshStandardMaterial({
-  color: blue,
+  color: red3,
   side: THREE.BackSide,
   //depthWrite: false,
   depthTest: false,
 });
 
+function torus() {
+  const torus_big = new THREE.TorusGeometry(10, 3, 20, 70);
+  const torus = new THREE.Mesh(torus_big, materialLight);
+  const torusOutline = new THREE.Mesh(torus_big, materialBorder);
+  torusOutline.scale.addScalar(0.01);
+  scene.add(torus);
+  scene.add(torusOutline);
+  torus.position.set(0, 0, 0);
+  return torus;
+}
+
+function torus_rotation(torus, rotation) {
+  if (rotation === "left") {
+    torus.rotation.x += 0.01;
+    torus.rotation.y += 0.01;
+  }
+  if (rotation === "right") {
+    torus2.rotation.x += 0.02;
+    torus2.rotation.y += 0.02;
+  }
+}
+
 //=====================OBJECTS==============================
-//OBJECT: torus
-const torus = new THREE.Mesh(torus_big, materialLight);
-const torus2 = new THREE.Mesh(torus_small, materialLight);
+
 //OBJECT: cube
 const cube_big = new THREE.Mesh(square_big, materialLight);
 const cube_small = new THREE.Mesh(sqare_small, materialBorderNoDepthRed);
 const cube_void = new THREE.Mesh(square_void, materialBorderNoDepth);
-//TORUS OUTLINES
-const torusOutline = new THREE.Mesh(torus_big, materialBorder);
-const torusOutline2 = new THREE.Mesh(torus_small, materialBorder);
+
 //SQUARE OUTLINES
 const cubeOutline = new THREE.Mesh(square_big, materialBorder);
 const cubeOutline2 = new THREE.Mesh(sqare_small, materialBorderNoDepthPink);
 
-torusOutline.scale.addScalar(0.04);
-torusOutline2.scale.addScalar(0.04);
-
-cubeOutline.scale.addScalar(0.04);
-cubeOutline2.scale.addScalar(0.08);
+cubeOutline.scale.addScalar(0.01);
+cubeOutline2.scale.addScalar(0.04);
 
 //LIGHT: point light
 const pointLight = new THREE.PointLight(0xffffff, 1, 100);
@@ -110,18 +123,13 @@ const gridHelper = new THREE.GridHelper(200, 50);
 const controls = new OrbitControls(camera, renderer.domElement);
 //====================POSITIONS=============================
 pointLight.position.set(0, 0, 25);
-torus.position.set(0, 0, 0);
 ambientLight.position.set(0, 0, 0);
 
 //====================ADDITIONS=============================
 //OBJECTS:
 scene.add(pointLight);
 scene.add(ambientLight);
-//TORUS:
-// scene.add(torus);
-// scene.add(torus2);
-// scene.add(torusOutline);
-// scene.add(torusOutline2);
+
 //SQUARE:
 scene.add(cube_big);
 scene.add(cube_small);
@@ -149,19 +157,13 @@ function addStar() {
   scene.add(star);
 }
 
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+}
 //====================ANIMATIONS============================
 function animate() {
   requestAnimationFrame(animate);
 
-  //torus rotation
-  torus.rotation.x += 0.01;
-  torus.rotation.y += 0.01;
-  torusOutline.rotation.x += 0.01;
-  torusOutline.rotation.y += 0.01;
-  torus2.rotation.x += 0.02;
-  torus2.rotation.y += 0.02;
-  torusOutline2.rotation.x += 0.02;
-  torusOutline2.rotation.y += 0.02;
   //cube rotation
   cube_big.rotation.x += 0.01;
   cube_big.rotation.y += 0.01;
@@ -181,4 +183,5 @@ function animate() {
 //star rendering loop
 //Array(200).fill().forEach(addStar);
 //main animation
+document.body.onscroll = moveCamera;
 animate();

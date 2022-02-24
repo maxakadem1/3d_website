@@ -1,7 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
 canvas {
   position: fixed;
   top: 0;
   left: 0;
+}
+
+main {
+  position: absolute;
+  color: aliceblue;
 }
